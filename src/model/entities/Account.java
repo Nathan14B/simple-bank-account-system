@@ -1,5 +1,6 @@
 package model.entities;
 
+import model.exceptions.BalanceExceededException;
 import model.exceptions.NonPositiveAmountException;
 
 public class Account {
@@ -37,5 +38,17 @@ public class Account {
 		}
 		
 		balance += depositAmount;
+	}
+	
+	public void withdraw(double withdrawalAmount) {
+		if (withdrawalAmount <= 0.0) {
+			throw new NonPositiveAmountException("The withdrawal amount must be greater than zero!");
+		}
+		
+		if (withdrawalAmount > balance) {
+			throw new BalanceExceededException("Withdrawal amount exceeded account balance!");
+		}
+		
+		balance -= withdrawalAmount;
 	}
 }
